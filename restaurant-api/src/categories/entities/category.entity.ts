@@ -1,5 +1,19 @@
-export class Category{
-    id: number;
-    name: string;
-    description: string;
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+} from 'typeorm';
+
+@Entity('categories')
+export class Category {
+
+  @PrimaryGeneratedColumn()
+  id!: number;
+
+  @Column({unique: true})
+  name!: string;
+
+  @Column()
+  description!: string;
+
 }
