@@ -7,7 +7,9 @@ import { AppService } from './app.service';
 import { CategoriesModule } from './categories/categories.module';
 import { DishesModule } from './dishes/dishes.module';
 import { UsersModule } from './users/users.module';
-import { UserController } from './user/user.controller';
+import { UsersController } from './users/users.controller';
+
+// import { UserController } from './user/user.controller';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -47,7 +49,7 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
 
-  controllers: [AppController, UserController],
+  controllers: [AppController, UsersController],
 
   providers: [AppService],
 })
