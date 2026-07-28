@@ -16,10 +16,17 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Role } from 'src/users/enums/role.enum';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { UseInterceptors } from '@nestjs/common';
+
+import { LoggingInterceptor } from 'src/common/interceptors/logging.interceptor';
+import { TransformInterceptor } from 'src/common/interceptors/transform.interceptor';
 
   
 @UseGuards(JwtAuthGuard, RolesGuard) 
-
+@UseInterceptors(
+  LoggingInterceptor,
+  TransformInterceptor,
+)
 @Controller('categories')
 export class CategoriesController {
   constructor(

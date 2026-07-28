@@ -12,6 +12,11 @@ import { UsersController } from './users/users.controller';
 // import { UserController } from './user/user.controller';
 import { AuthModule } from './auth/auth.module';
 
+import { APP_INTERCEPTOR } from '@nestjs/core';
+
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -51,6 +56,16 @@ import { AuthModule } from './auth/auth.module';
 
   controllers: [AppController, UsersController],
 
-  providers: [AppService],
+  providers: [AppService,
+     {
+    provide: APP_INTERCEPTOR,
+    useClass: LoggingInterceptor,
+  },
+
+  {
+    provide: APP_INTERCEPTOR,
+    useClass: TransformInterceptor,
+  },
+  ],
 })
 export class AppModule {}
