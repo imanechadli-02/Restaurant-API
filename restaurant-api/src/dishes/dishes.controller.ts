@@ -7,10 +7,14 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 
 import { DishesService } from './dishes.service';
 import { CreateDishDto } from './dto/createDishes.dto';
+import { Role } from 'src/users/enums/role.enum';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 // import { UpdateDishDto } from './dto/updateDishes.dto';
 
 @Controller('dishes')
@@ -21,6 +25,8 @@ export class DishesController {
   ) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard) 
+  @Roles(Role.ADMIN)
   create(
     @Body() createDishDto: CreateDishDto,
   ) {
@@ -28,11 +34,13 @@ export class DishesController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard) 
   findAll() {
     return this.dishesService.findAll();
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard) 
   findOne(
     @Param('id', ParseIntPipe) id: number,
   ) {
@@ -40,6 +48,8 @@ export class DishesController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard) 
+  @Roles(Role.ADMIN)
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateDishDto: CreateDishDto,
@@ -48,6 +58,8 @@ export class DishesController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard) 
+  @Roles(Role.ADMIN)
   remove(
     @Param('id', ParseIntPipe) id: number,
   ) {
