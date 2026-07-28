@@ -17,6 +17,9 @@ import { Role } from 'src/users/enums/role.enum';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 
+  
+@UseGuards(JwtAuthGuard, RolesGuard) 
+
 @Controller('categories')
 export class CategoriesController {
   constructor(
@@ -24,7 +27,7 @@ export class CategoriesController {
   ) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard, RolesGuard) 
+  
   @Roles(Role.ADMIN)
   create(
     @Body() CategoryDto: CategoryDto,
@@ -33,13 +36,11 @@ export class CategoriesController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard) 
   findAll() {
     return this.categoriesService.findAll();
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard) 
   findOne(
     @Param('id', ParseIntPipe) id: number,
   ) {
@@ -47,7 +48,6 @@ export class CategoriesController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard) 
   @Roles(Role.ADMIN)
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -60,7 +60,6 @@ export class CategoriesController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard) 
   @Roles(Role.ADMIN)
   remove(
     @Param('id', ParseIntPipe) id: number,
