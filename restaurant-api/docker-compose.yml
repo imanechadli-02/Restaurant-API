@@ -1,0 +1,37 @@
+services:
+
+  mysql:
+    image: mysql:8
+
+    container_name: restaurant_mysql
+
+    restart: always
+
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345chadli
+      MYSQL_DATABASE: restaurant_api
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  api:
+    build: .
+
+    container_name: restaurant_api
+
+    restart: always
+
+    depends_on:
+      - mysql
+
+    env_file:
+      - .env
+
+    ports:
+      - "3000:3000"
+
+volumes:
+  mysql_data:
