@@ -41,7 +41,7 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 
         autoLoadEntities: true,
 
-        synchronize: true, 
+        synchronize: false, 
       }),
     }),
 
